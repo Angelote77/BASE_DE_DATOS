@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COOPERATIVAS</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <h1>COOPERATIVAS</h1>
+    <table border="1px">
+        <form id="crearCooperativaForm" action="/crud_cooperativa" method="post">
+            <input type="text" id="txt_iden" name="txt_iden" placeholder="Identificación">
+            <input type="text" id="txt_nom" name="txt_nom" placeholder="Nombre">
+            <input type="text" id="txt_sig" name="txt_sig" placeholder="Siglas">
+            <input type="text" id="txt_dir" name="txt_dir" placeholder="Dirección">
+            <input type="text" id="txt_tel" name="txt_tel" placeholder="Teléfono">
+            <input type="text" id="txt_cor" name="txt_cor" placeholder="Correo">
+            <input type="text" id="txt_slo" name="txt_slo" placeholder="Eslogan">
+            <input type="text" id="txt_usu_rep" name="txt_usu_rep" placeholder="Usuario Representante">
+            <input type="hidden" name="btm_crear" value="crear">
+            <button type="button" id="btm_crear">Crear</button>
+        </form>
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Identificación</th>
+                <th>Nombre</th>
+                <th>Siglas</th>
+                <th>Dirección</th>
+                <th>Teléfono</th>
+                <th>Correo</th>
+                <th>Eslogan</th>
+                <th>Usuario Representante</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% resultado.forEach((cooperativa) => { %>
+            <tr>
+                <td><%= cooperativa.CooCod %></td>
+                <td><%= cooperativa.CooIden %></td>
+                <td><%= cooperativa.CooNom %></td>
+                <td><%= cooperativa.CooSig %></td>
+                <td><%= cooperativa.CooDir %></td>
+                <td><%= cooperativa.CooTel %></td>
+                <td><%= cooperativa.CooCor %></td>
+                <td><%= cooperativa.CooSlo %></td>
+                <td><%= cooperativa.CooUsuRep %></td>
+                <td>
+                    <input type="checkbox" class="estado-checkbox" data-id="<%= cooperativa.CooCod %>" data-context="cooperativa" <%= cooperativa.CooEst ? 'checked' : '' %>>
+                </td>
+                <td>
+                    <button type="button" class="btn-actualizar" data-id="<%= cooperativa.CooCod %>" data-context="cooperativa" data-iden="<%= cooperativa.CooIden %>" data-nom="<%= cooperativa.CooNom %>" data-sig="<%= cooperativa.CooSig %>" data-dir="<%= cooperativa.CooDir %>" data-tel="<%= cooperativa.CooTel %>" data-cor="<%= cooperativa.CooCor %>" data-slo="<%= cooperativa.CooSlo %>" data-usu-rep="<%= cooperativa.CooUsuRep %>" <%= cooperativa.CooEst ? '' : 'disabled' %>>Actualizar</button>
+                    <form action="/crud_cooperativa" method="post" style="display:inline;">
+                        <input type="hidden" name="txt_id" value="<%= cooperativa.CooCod %>">
+                        <button type="submit" id="btm_borrar" name="btm_borrar" value="borrar" <%= cooperativa.CooEst ? '' : 'disabled' %>>Borrar</button>
+                    </form>
+                </td>
+            </tr>
+            <% }); %>
+        </tbody>
+    </table>
+
+    <!-- Modal para actualización -->
+    <div id="updateModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form action="/crud_cooperativa" method="post">
+                <input type="hidden" id="update_id" name="txt_id">
+                <div>
+                    <label for="update_iden">Identificador:</label>
+                    <input type="text" id="update_iden" name="txt_iden">
+                </div>
+                <div>
+                    <label for="update_nom">Nombre:</label>
+                    <input type="text" id="update_nom" name="txt_nom">
+                </div>
+                <div>
+                    <label for="update_sig">Siglas:</label>
+                    <input type="text" id="update_sig" name="txt_sig">
+                </div>
+                <div>
+                    <label for="update_dir">Dirección:</label>
+                    <input type="text" id="update_dir" name="txt_dir">
+                </div>
+                <div>
+                    <label for="update_tel">Teléfono:</label>
+                    <input type="text" id="update_tel" name="txt_tel">
+                </div>
+                <div>
+                    <label for="update_cor">Correo:</label>
+                    <input type="text" id="update_cor" name="txt_cor">
+                </div>
+                <div>
+                    <label for="update_slo">Eslogan:</label>
+                    <input type="text" id="update_slo" name="txt_slo">
+                </div>
+                <div>
+                    <label for="update_usu_rep">Usuario Representante:</label>
+                    <input type="text" id="update_usu_rep" name="txt_usu_rep">
+                </div>
+                <button type="submit" id="btm_actualizar" name="btm_actualizar" value="actualizar">Actualizar</button>
+                <button type="button" id="cancelUpdate">Cancelar</button> <!-- Botón de cancelar -->
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para confirmación de creación -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <h2>Confirmar creación de cooperativa</h2>
+            <p>¿Está seguro que desea crear una cooperativa con los siguientes datos?</p>
+            <div id="confirmData"></div>
+            <button id="confirmCreate">Confirmar</button>
+            <button id="cancelCreate">Cancelar</button>
+        </div>
+    </div>
+
+    <!-- Modal para advertencias -->
+    <div id="warningModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="warningMessage"></p>
+            <button id="closeWarning">Cerrar</button>
+        </div>
+    </div>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>

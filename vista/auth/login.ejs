@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/estilosL.css">
+    <title>Login y Registro</title>
+</head>
+<body>
+    <main>
+       <div class="contenedor_todo">
+          <div class="caja_trasera">
+            <div class="caja_trasera-login">
+                <h3>¿Ya tienes cuenta?</h3>
+                <p>Inicia sesión para entrar en tu la página</p>
+                <button id="btn_iniciar-sesion">Iniciar Sesion</button>
+            </div>
+            <div class="caja_trasera-register">
+                <h3>¿Aun no tienes una cuenta?</h3>
+                <p>Regístrate para que puedas iniciar sesión</p>
+                <button id="btn_registrarse">Registrarse</button>
+            </div>
+          </div>
+
+          <div class="contenedor_login-register">
+            <form action="/login" method="post" class="formulario_login">
+                <h2>Iniciar Sesion</h2>
+                <% if (typeof error !== 'undefined') { %>
+                    <p id="error-msg" style="color: red;"><%= error %></p>
+                <% } %>
+                <input type="text" name="usuario" placeholder="Usuario">
+                <input type="password" name="contrasena" placeholder="Contraseña">
+                <button type="submit">Entrar</button>
+            </form>
+            
+            <form action="/register" method="post" class="formulario_register">
+                <h2>Registrarse</h2>
+                <input type="text" name="PerApePat" placeholder="Apellido Paterno">
+                <input type="text" name="PerApeMat" placeholder="Apellido Materno">
+                <input type="text" name="PerNom" placeholder="Nombre">
+                <input type="date" name="PerFecNac" placeholder="Fecha de Nacimiento">
+                <input type="email" name="PerCor" placeholder="Correo Electrónico">
+                <input type="text" name="usuario" placeholder="Usuario">
+                <input type="password" name="contrasena" placeholder="Contraseña">
+                <button type="submit">Registrarse</button>
+            </form>
+          </div>
+       </div>
+    </main>
+    <script src="/js/script1.js"></script>
+</body>
+</html>

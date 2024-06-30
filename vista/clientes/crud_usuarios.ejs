@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USUARIOS</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <h1>USUARIOS</h1>
+    <table border="1px">
+        <form action="/crud_usuarios" method="post">
+            <input type="text" id="txt_usu" name="txt_usu" placeholder="Usuario">
+            <input type="text" id="txt_per" name="txt_per" placeholder="Nombre de Persona">
+            <input type="text" id="txt_est" name="txt_est" placeholder="Estado">
+            <button type="submit" id="btm_crear" name="btm_crear" value="crear">Crear</button>
+        </form>
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Usuario</th>
+                <th>Nombre de Persona</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% resultado.forEach((usuario) => { %>
+            <tr>
+                <td><%= usuario.UsuCod %></td>
+                <td><%= usuario.UsuUsu %></td>
+                <td><%= usuario.PerNom %></td>
+                <td>
+                    <input type="checkbox" class="estado-checkbox" data-id="<%= usuario.UsuCod %>" data-context="usuario" <%= usuario.UsuEst ? 'checked' : '' %>>
+                </td>
+                <td>
+                    <button type="button" class="btn-actualizar" data-id="<%= usuario.UsuCod %>" data-context="usuario" data-usu="<%= usuario.UsuUsu %>" data-per="<%= usuario.PerNom %>" data-est="<%= usuario.UsuEst %>">Actualizar</button>
+                    <form action="/crud_usuarios" method="post" style="display:inline;">
+                        <input type="hidden" name="txt_id" value="<%= usuario.UsuCod %>">
+                        <button type="submit" id="btm_borrar" name="btm_borrar" value="borrar">Borrar</button>
+                    </form>
+                </td>
+            </tr>
+            <% }); %>
+        </tbody>
+    </table>
+
+    <!-- Modal para actualización -->
+    <div id="updateModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form action="/crud_usuarios" method="post">
+                <input type="hidden" id="update_id" name="txt_id">
+                <input type="text" id="update_usu" name="txt_usu" placeholder="Usuario">
+                <input type="text" id="update_per" name="txt_per" placeholder="Nombre de Persona">
+                <input type="text" id="update_est" name="txt_est" placeholder="Estado">
+                <button type="submit" id="btm_actualizar" name="btm_actualizar" value="actualizar">Actualizar</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>
